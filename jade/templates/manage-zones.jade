@@ -1,0 +1,15 @@
+ion-modal-view(ng-repeat='group in groups | filter: { name: groupName }')
+  ion-header-bar
+    h1.title {{group.name}} Zones
+    .buttons
+      button.button.button-clear(ng-click='closeManageZones()') Close
+
+  ion-content
+    ion-list(ng-repeat='zone in group.zones')
+
+      ion-item.item.item-toggle
+        p {{zone.name}}
+        label.toggle.toggle-positive
+          input(type='checkbox', ng-model='zone.enabled', ng-change='onZoneStateChange(zone.name, zone.enabled)')
+          .track 
+            .handle

@@ -1,0 +1,34 @@
+ion-view(view-title='{{groupName}}')
+  ion-content(ng-repeat='group in groups | filter: { name: groupName }')
+
+    .list.card()
+      .item.item-icon-left(ng-if='group.nowPlaying')
+        i(class='icon ion-music-note')
+        h2 {{group.nowPlaying.song}}
+        h3 {{group.nowPlaying.album}}
+        p {{group.nowPlaying.artist}}
+      .item(ng-if='!group.nowPlaying')
+        p Nothing Playing
+
+    .list.list-inset
+      ion-item.item.item-divider Master Volume
+
+      ion-item.item.range
+        i.icon.ion-volume-low
+        input(type='range', name='volume', ng-model='group.volume', ng-change='onMasterVolumeChange(group.volume)')
+        i.icon.ion-volume-high
+        p {{group.volume}}
+
+    .list.list-inset
+      button.button.button-block.button-positive(ng-click='manageZones()') Manage Zones
+
+    .list.list-inset
+
+      div(ng-repeat='zone in group.zones | filter:{ enabled: true }')
+        ion-item.item.item-divider {{zone.name}}
+
+        ion-item.item.range
+          i.icon.ion-volume-low
+          input(type='range', name='volume', ng-model='zone.volume', ng-change='onZoneVolumeChange(zone.name, zone.volume)')
+          i.icon.ion-volume-high
+          p {{zone.volume}}
