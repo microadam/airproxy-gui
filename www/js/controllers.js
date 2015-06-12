@@ -61,9 +61,10 @@ window.angular.module('starter.controllers', [])
   }
 
   $scope.onMasterVolumeChange = function (volume) {
+    volume = Math.ceil(volume)
     var group = getGroup($scope.groups, groupName)
     group.zones.forEach(function (zone) {
-      zone.volume = zone.volumeMultiplier * volume
+      zone.volume = Math.ceil(zone.volumeMultiplier * volume)
     })
     $scope.primus.send('masterVolumeChange', { name: groupName, volume: volume })
   }
